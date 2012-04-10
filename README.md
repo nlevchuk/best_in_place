@@ -55,6 +55,7 @@ Options:
 - **:ok_button**: (Inputs and textareas only) If set to a string, then an OK button will be shown with the string as its label, replacing save on blur.
 - **:cancel_button**: (Inputs and textareas only) If set to a string, then a Cancel button will be shown with the string as its label.
 - **:sanitize**: True by default. If set to false the input/textarea will accept html tags.
+- **:sanitize_opts**: ONLY SANITIZE EQUAL FALSE. Include hash two parameters: tags and attributes, and define which elements(tags or attributes) will available like as html tags (or attributes). Ex, ':sanitize_opts => {:tags => %w{i b}, :attributes => %w{id}}'
 - **:html_attrs**: Hash of html arguments, such as maxlength, default-value etc.
 - **:inner_class**: Class that is set to the rendered form.
 - **:display_as**: A model method which will be called in order to display
