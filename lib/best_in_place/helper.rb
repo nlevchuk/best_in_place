@@ -46,7 +46,19 @@ module BestInPlace
       out << " data-original-content='#{attribute_escape(object.send(field))}'" if opts[:display_as] || opts[:display_with]
       if !opts[:sanitize].nil? && !opts[:sanitize]
         out << " data-sanitize='false'>"
-        out << sanitize(value, :tags => %w(b i u s a strong em p h1 h2 h3 h4 h5 ul li ol hr pre span img br), :attributes => %w(id class href))
+        tags = %w(b i u s a strong em p h1 h2 h3 h4 h5 ul li ol hr pre span img br)
+        attributes = %w(id class href)
+        if !opts[:sanitize_opts].nil?
+          if !opts[:sanitize_opts][:tags].nil? && opts[:sanitize_opts][:tags].all? {|item| tags.include?(item)}
+            if !opts[:sanitize_opts][:attributes].nil? && opts[:sanitize_opts][:attributes].all? {|item| attributes.include?(item)}
+              out << sanitize(value, :tags => opts[:sanitize_opts][:tags], :attributes => opts[:sanitize_opts][:attributes])
+            else
+              out << sanitize(value, :tags => opts[:sanitize_opts][:tags], :attributes => nil)
+            end
+          end
+        else
+          out << sanitize(value, :tags => tags, :attributes => attributes)
+        end
       else
         out << ">#{sanitize(value, :tags => nil, :attributes => nil)}"
       end
